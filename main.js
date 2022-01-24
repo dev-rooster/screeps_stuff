@@ -1,11 +1,7 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
+var roleRepairer = require('role.repairer');
 var spawner = require('spawner');
-const { spawn } = require('./spawner');
-var harversterCount = 2;
-var upgraderCount = 2;
-var builderCount = 4;
 
 module.exports.loop = function () {
 
@@ -15,7 +11,7 @@ module.exports.loop = function () {
             console.log('Clearing non-existing creep memory:', name);
         }
     }
-
+    
     spawner.spawn();
 
     for(var name in Game.creeps) {
@@ -26,9 +22,9 @@ module.exports.loop = function () {
          if(creep.memory.role == 'upgrader') {
              roleUpgrader.run(creep);
          }
-         if(creep.memory.role == 'builder'){
-             roleBuilder.run(creep);
+         if(creep.memory.role == 'repairer')
+         {
+             roleRepairer.run(creep);
          }
-     
     }
 }
