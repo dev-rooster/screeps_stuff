@@ -28,11 +28,12 @@ var roleUpgrader = {
            if(creepFunctions.build(creep)){
                return;
            }
-           if(creepFunctions.upgrade(creep)){
 
-           }
+           if(creepFunctions.upgrade(creep)){
+            return;
+       }
         }
-    },
+    }
     
 };
 
