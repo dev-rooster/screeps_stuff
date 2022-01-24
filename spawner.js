@@ -1,7 +1,7 @@
 var spawner = {
     
     spawn: function(){
-    var harversterCount = 3;
+    var harversterCount = 2;
     var upgraderCount = 3;
     var workerCount = 1;
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
@@ -18,19 +18,19 @@ var spawner = {
 
     if(harvesters.length < harversterCount) {
         var newName = 'Harvester' + Game.time;
-        Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE], newName, 
+        Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'harvester'}}); // 700
     }
     if(upgraders.length < upgraderCount){
         var newName = "Upgrader" + Game.time;
-        Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE], newName, 
-            {memory: {role: 'upgrader'}}); //800
+        Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+            {memory: {role: 'upgrader'}}); // 700
     }
     if(workers.length < workerCount)
     {
         var newName = "Worker" + Game.time;
         Game.spawns['Spawn1'].spawnCreep([WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], newName,
-            {memory: {role: 'worker'}}); //500
+            {memory: {role: 'worker'}}); // 500
     }
     if(Game.spawns['Spawn1'].spawning) { 
         var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
