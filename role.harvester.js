@@ -3,10 +3,10 @@ var roleHarvester = {
     /** @param {Creep} creep **/
     run: function(creep) {
         // if we have space for energy, go get energy
-	    if(creep.store.getFreeCapacity() > 0) {
-            var sources = creep.room.find(FIND_SOURCES);
-            if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
+	    if(creep.store.getFreeCapacity() > 0 ) {
+            var nearest = creep.pos.findClosestByPath(FIND_SOURCES);
+            if(creep.harvest(nearest) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(nearest, {visualizePathStyle: {stroke: '#ffaa00'}});
             }
         }
         // otherwise go deposit the energy in a structure with space
@@ -24,6 +24,21 @@ var roleHarvester = {
                 if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
+            }
+            else{
+                var nearest = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
+                if(nearest!= null) {
+                    if(creep.build(nearest) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(nearest, {visualizePathStyle: {stroke: '#ffffff'}});
+                    }
+                }
+                else{
+                    //    creep.say("⬆️")
+                        if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
+                        }
+    
+                    }
             }
         }
 	}
