@@ -26,12 +26,6 @@ var spawner = {
         Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'upgrader'}}); //800
     }
-    if(repairers.length < repairerCount)
-    {
-        var newName = "Repairer" + Game.time;
-        Game.spawns['Spawn1'].spawnCreep([WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE], newName,
-            {memory: {role: 'repairer', currentlyRepairing: null}}); //500
-    }
     if(Game.spawns['Spawn1'].spawning) { 
         var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
         Game.spawns['Spawn1'].room.visual.text(

@@ -1,47 +1,45 @@
+var creepFunctions = require("creep.functions");
 var roleHarvester = {
+   
+    // PRIORITY LIST
+    // Collect Energy
+    // Fill storage
+    // Build construction sites
+    // Upgrade controller
 
     /** @param {Creep} creep **/
     run: function(creep) {
-        // if we have space for energy, go get energy
-	    if(creep.store.getFreeCapacity() > 0 ) {
-            var nearest = creep.pos.findClosestByPath(FIND_SOURCES);
-            if(creep.harvest(nearest) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(nearest, {visualizePathStyle: {stroke: '#ffaa00'}});
+        
+        // clear the building flag if we're out of energy
+        if(creep.memory.building && creep.store[RESOURCE_ENERGY] == 0) {
+            creep.memory.building = false;
+        }
+
+        if(!creep.memory.building){
+            // collect energy
+            if(creepFunctions.collect(creep)) {
+                return;
+            }
+            // fill storage
+            if(creepFunctions.fillStorage(creep)){
+                return;
             }
         }
-        // otherwise go deposit the energy in a structure with space
-        else {
-            var targets = creep.room.find(FIND_STRUCTURES, {
-                    filter: (structure) => {
-                        return (structure.structureType == STRUCTURE_EXTENSION ||
-                                structure.structureType == STRUCTURE_SPAWN ||
-                                structure.structureType == STRUCTURE_TOWER) && 
-                                structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
-                    }
-            });
-            
-            if(targets.length > 0) {
-                if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
-                }
-            }
-            else{
-                var nearest = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
-                if(nearest!= null) {
-                    if(creep.build(nearest) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(nearest, {visualizePathStyle: {stroke: '#ffffff'}});
-                    }
-                }
-                else{
-                    //    creep.say("⬆️")
-                        if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
-                        }
-    
-                    }
-            }
+
+        // if all storage is full, go ahead and build/upgrade
+        if(!creep.memory.building && creep.store.getFreeCapacity() == 0) {
+            creep.memory.building = true;
         }
-	}
+
+        //build
+        if(creepFunctions.build(creep)){
+            return;
+        }
+        // upgrade
+        if(creepFunctions.upgrade(creep)){
+
+        }
+    }
 };
 
 module.exports = roleHarvester;
