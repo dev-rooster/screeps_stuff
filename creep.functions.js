@@ -1,7 +1,7 @@
 var creepFunctions = {
     collect: function(creep){
         if(creep.store.getFreeCapacity() > 0 ){
-            creep.say("Harvest!");
+            //creep.say("Harvest!");
             var nearest = creep.pos.findClosestByPath(FIND_SOURCES);
             if(creep.harvest(nearest) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(nearest, {visualizePathStyle: {stroke: '#ffaa00'}});
@@ -22,7 +22,7 @@ var creepFunctions = {
         });
         
         if(targets.length > 0) {
-            creep.say("Fill!");
+            //creep.say("Fill!");
             if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
             }
@@ -32,7 +32,7 @@ var creepFunctions = {
     },
 
     upgrade: function(creep){
-        creep.say("Upgrade!");
+        //creep.say("Upgrade!");
         if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
             creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
         }
@@ -41,7 +41,7 @@ var creepFunctions = {
     build: function(creep){
         var nearest = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
         if(nearest!= null) {
-            creep.say("Build!");
+            //creep.say("Build!");
             if(creep.build(nearest) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(nearest, {visualizePathStyle: {stroke: '#ffffff'}});
             }
@@ -51,11 +51,21 @@ var creepFunctions = {
     },
 
     repair: function(creep){
-
+        var nearest = creep.pos.findClosestByPath(FIND_STRUCTURES,{
+            filter: (structure) =>{
+                return structure.structureType == STRUCTURE_ROAD && structure.hits < structure.hitsMax
+            }
+        });
+        if(nearest != null)
+        {
+            if(creep.repair(nearest) == ERR_NOT_IN_RANGE){
+                creep.moveTo(nearest,{visualizePathStyle: {stroke: '#ff00ff'}});
+            }
+        }     
+            
+        
+        return false;
     },
-
-
-
 }
 
 module.exports = creepFunctions;
