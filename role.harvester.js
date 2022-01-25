@@ -17,7 +17,7 @@ var roleHarvester = {
 
         if(!creep.memory.building){
             // collect energy
-            if(creepFunctions.collect(creep)) {
+            if(creepFunctions.harvest(creep)) {
                 return;
             }
             // fill storage
