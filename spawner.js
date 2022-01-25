@@ -1,9 +1,9 @@
 var spawner = {
     
     spawn: function(){
-    var harversterCount = 2;
+    var harversterCount = 4;
     var upgraderCount = 3;
-    var workerCount = 1;
+    var workerCount = 2;
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
     var workers = _.filter(Game.creeps,(creep) => creep.memory.role == 'worker');
@@ -18,19 +18,19 @@ var spawner = {
 
     if(harvesters.length < harversterCount) {
         var newName = 'Harvester' + Game.time;
-        Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
-            {memory: {role: 'harvester'}}); // 700
+        Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+            {memory: {role: 'harvester'}}); // 1000
     }
     if(upgraders.length < upgraderCount){
         var newName = "Upgrader" + Game.time;
-        Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
-            {memory: {role: 'upgrader'}}); // 700
+        Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+            {memory: {role: 'upgrader'}}); // 1000
     }
     if(workers.length < workerCount)
     {
         var newName = "Worker" + Game.time;
-        Game.spawns['Spawn1'].spawnCreep([WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], newName,
-            {memory: {role: 'worker'}}); // 500
+        Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName,
+            {memory: {role: 'worker'}}); // 1000
     }
     if(Game.spawns['Spawn1'].spawning) { 
         var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];

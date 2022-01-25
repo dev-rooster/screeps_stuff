@@ -15,7 +15,7 @@ var roleUpgrader = {
         }
 
         if(!creep.memory.building){
-           if(creepFunctions.collect(creep)){
+           if(creepFunctions.collect(creep) && creep.store.getFreeCapacity() > 0){
                 return;
             }
         }

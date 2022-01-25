@@ -15,7 +15,7 @@ var roleWorker = {
 
         if(!creep.memory.building){
             // collect energy
-            if(creepFunctions.collect(creep)) {
+            if(creepFunctions.collect(creep) && creep.store.getFreeCapacity() > 0) {
                 return;
             }
         }
@@ -26,6 +26,14 @@ var roleWorker = {
 
         //build
         if(creepFunctions.repair(creep)){
+            return;
+        }
+
+        if(creepFunctions.build(creep)){
+            return;
+        }
+        
+        if(creepFunctions.fortifyWalls(creep)){
             return;
         }
     }
