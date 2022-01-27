@@ -21,13 +21,25 @@ var creepFunctions = {
     {       
         if(creep.store.getFreeCapacity() > 0 ){
 
-        var nearest = creep.pos.findClosestByPath(FIND_SOURCES, {
-            filter: s=>s.energy > 0
-        });
-        if(creep.harvest(nearest) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(nearest, {visualizePathStyle: {stroke: '#ffaa00'}});
-        }
-        return true;
+            var nearestDropped = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
+            if(nearestDropped != undefined){
+                if(creep.pickup(nearestDropped) == ERR_NOT_IN_RANGE){
+                    creep.moveTo(nearestSource, {visualizePathStyle: {stroke: '#ffaa00'}});
+                }
+                return true;
+            }
+        
+            var nearestSource = creep.pos.findClosestByPath(FIND_SOURCES, {
+                filter: s=>s.energy > 0
+            });
+            
+            if(nearestSource != undefined){
+                if(creep.harvest(nearestSource) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(nearestSource, {visualizePathStyle: {stroke: '#ffaa00'}});
+                }
+                return true;
+            }
+            return false;
         }
         return false;
     },
