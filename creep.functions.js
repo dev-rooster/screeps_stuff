@@ -20,6 +20,7 @@ var creepFunctions = {
     harvest: function(creep)
     {       
         if(creep.store.getFreeCapacity() > 0 ){
+
         var nearest = creep.pos.findClosestByPath(FIND_SOURCES, {
             filter: s=>s.energy > 0
         });

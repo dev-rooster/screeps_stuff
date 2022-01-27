@@ -3,10 +3,10 @@ var spawner = {
     spawn: function(){
     var harversterCount = 4;
     var upgraderCount = 2;
-    var workerCount = 2;
-    var fighterCount = 2;
-    var healerCount = 1;
-    var courierCount = 1;
+    var workerCount = 1;
+    var fighterCount = 0;
+    var healerCount = 0;
+    var courierCount = 2;
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
     var workers = _.filter(Game.creeps,(creep) => creep.memory.role == 'worker');
@@ -29,7 +29,7 @@ var spawner = {
             RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,
             TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,
             TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,],newName,
-            {memory:{role: 'fighter'}});
+            {memory:{role: 'fighter'}}); // 1000
     }
     if(healers.length < healerCount)
     {
@@ -39,12 +39,12 @@ var spawner = {
             HEAL,HEAL,
             TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,
             TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH],newName,
-            {memory:{role: 'healer'}});
+            {memory:{role: 'healer'}}); //900
     }
     if(upgraders.length < upgraderCount){
         var newName = "Upgrader" + Game.time;
-        Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
-            {memory: {role: 'upgrader'}}); // 1000
+        Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+            {memory: {role: 'upgrader'}}); // 800
     }
     if(workers.length < workerCount)
     {
@@ -59,8 +59,8 @@ var spawner = {
     }
     if(couriers.length < courierCount){
         var newName = "Courier" + Game.time;
-        Game.spawns["Spawn1"].spawnCreep([MOVE,MOVE,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY],newName,
-            {memory:{role:'courier'}});
+        Game.spawns["Spawn1"].spawnCreep([MOVE,MOVE,MOVE,MOVE,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY],newName,
+            {memory:{role:'courier'}}); // 1000
     }
 
 

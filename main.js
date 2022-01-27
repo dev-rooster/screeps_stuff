@@ -41,5 +41,37 @@ module.exports.loop = function () {
             roleCourier.run(creep);
         }
     }
+    
+    // super basic tower defense
+    var roomName = 'W41N41';
+    var towers = Game.rooms[roomName].find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}});
+    var hostiles = Game.rooms['W41N41'].find(FIND_HOSTILE_CREEPS);
+    if(hostiles.length > 0) {
+        var username = hostiles[0].owner.username;
+        Game.notify(`User ${username} spotted in room ${roomName}`);
 
+        towers.forEach(tower => tower.attack(hostiles[0]));
+    }
+    else
+    {
+        var hurt = Game.rooms[roomName].find(FIND_MY_CREEPS, {filter: (creep) =>  { return creep.hits < creep.hitsMax}});
+        if(hurt.length > 0)
+        {
+            towers.forEach(tower => tower.heal(hurt[0]));
+        }
+        else
+        {
+            var hurtStruct = Game.rooms[roomName].find(FIND_STRUCTURES, {filter: (s) => {return (s.structureType == STRUCTURE_WALL || s.structureType == STRUCTURE_RAMPART) && s.hits < s.hitsMax && s.hits < 50000}});
+            if(hurtStruct.length > 0)
+            {
+                towers.forEach(tower => tower.repair(hurtStruct[0]));
+            }
+            /*else{
+                var hurtStruct = Game.rooms[roomName].find(FIND_MY_STRUCTURES, {filter: (s) => {return s.hits < s.hitsMax}});    
+                if(hurtStruct.length > 0){
+                    towers.forEach(tower => tower.repair(hurtStruct[0]));
+                }
+            }*/
+        }
+    }
 }
